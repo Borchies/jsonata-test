@@ -1,0 +1,35 @@
+---
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+# some metadata about the template itself
+metadata:
+  name: jsonata-test
+  title: JSONATA TEST
+  description:  Test to try JSONATA.
+spec:
+  owner: borja.gonzalez
+  type: service
+  parameters:
+    - title: MR Info
+      required:
+        - path
+      properties:
+        path:
+          title: path
+          description: The path from the root of the reposirory. The claim resource will be added in this folder.
+          type: string
+          default: "deploy/base"
+  steps:
+    - id: fetch-base
+      name: Fetch Kustomization
+      action: fetch:plain
+      input:
+        url: "https://github.com/Borchies/jsonata-test/blob/main/test.yaml"
+        targetPath: "${{ parameters.path }}"
+    - id: jsonata-test
+      if: ${{ parameters.addKustomization === "false" }}
+      name: Jsonata
+      action: roadiehq:utils:jsonata:yaml:transform
+      input:
+        path: "test.yaml"
+        expression: '$append(resources,"cname-record-test.yaml")'
