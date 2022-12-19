@@ -31,8 +31,8 @@ spec:
       input:
         path: "test.yaml"
         expression: '$append(resources,"cname-record-test.yaml")'
-   - id: log-info
-     name: log details
-     action: debug:log
-     input:
-       message: here is the details ${{ steps['jsonata-test'].output.result | dump }}
+    - id: log-info
+      name: log details
+      action: debug:log
+      input:
+        message: here is the details ${{ steps['jsonata-test'].output.result | dump }}
