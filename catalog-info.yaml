@@ -27,7 +27,6 @@ spec:
         url: "https://github.com/Borchies/jsonata-test/blob/main/test.yaml"
         targetPath: "${{ parameters.path }}"
     - id: jsonata-test
-      if: ${{ parameters.addKustomization === "false" }}
       name: Jsonata
       action: roadiehq:utils:jsonata:yaml:transform
       input:
