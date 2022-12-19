@@ -24,11 +24,15 @@ spec:
       name: Fetch Kustomization
       action: fetch:plain
       input:
-        url: "https://github.com/Borchies/jsonata-test/blob/main/test.yaml"
-        targetPath: "${{ parameters.path }}"
+        url: "https://github.com/Borchies/jsonata-test/blob/main"
     - id: jsonata-test
       name: Jsonata
       action: roadiehq:utils:jsonata:yaml:transform
       input:
         path: "test.yaml"
         expression: '$append(resources,"cname-record-test.yaml")'
+   - id: log-info
+     name: log details
+     action: debug:log
+     input:
+       message: here is the details ${{ steps['jsonata-test'].output.result | dump }}
